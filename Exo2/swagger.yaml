@@ -1,0 +1,395 @@
+swagger: "2.0"
+info:
+  description: "Ceci est notre proposition d'API pour le serveur de l'application de gestion des hôtels."
+  version: "1.0.0"
+  title: "API Gestion d'Hôtels"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "massiltag@icloud.com"
+  license:
+    name: "Creative Commons BY"
+    url: "https://creativecommons.org/licenses/by/4.0/"
+host: "api.parishotels.com"
+basePath: "/v1"
+tags:
+- name: "ReservationController"
+  description: "Gestion des réservations"
+- name: "StateController"
+  description: "Visualisation de l'état des hôtels"  
+- name: "CAController"
+  description: "Récupération du chiffre d'affaire de l'hôtel"  
+schemes:
+- "https"
+paths:
+  /reservation/{hotelId}:
+    post:
+      tags:
+      - "ReservationController"
+      summary: "Réserver une chambre pour un hôtel donné, et pour une date d’arrivée et de départ."
+      description: ""
+      operationId: "addReservation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "hotelId"
+        in: "path"
+        description: "ID de l'hôtel"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "dateArrivee"
+        in: "query"
+        description: "Date d'arrivée"
+        required: true
+        type: "string"
+        format: "date-time"
+      - name: "dateDepart"
+        in: "query"
+        description: "Date de départ"
+        required: true
+        type: "string"
+        format: "date-time"
+      responses:
+        "201":
+            description: "Created"
+        "405":
+          description: "Invalid input"
+      security:
+        - hotel_auth:
+          - "read:res"
+          - "write:res"
+  /reservations/{reservationId}/cancel:
+    put:
+      tags:
+      - "ReservationController"
+      summary: "Annuler une réservation."
+      description: "Nous avons choisi un PUT car dans notre conception, une réservation reste en BDD même après avoir été annulée.\nC'est son champ 'active' qui est mis à jour."
+      operationId: "cancelReservation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "reservationId"
+        in: "path"
+        description: "ID de la réservation"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+            description: "Reservation annulée"
+        "400":
+          description: "Invalid input"
+        "403":
+          description: "Vous n'êtes pas autorisé à effectuer cette action"
+      security:
+        - hotel_auth:
+          - "read:res"
+          - "write:res"
+  /reservations:
+    get:
+      tags:
+      - "ReservationController"
+      summary: "Récupérer toutes les réservations."
+      description: ""
+      operationId: "getReservations"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+            description: "Requête traitée"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Reservation"
+        "403":
+          description: "Vous n'êtes pas autorisé à effectuer cette action"
+      security:
+        - hotel_auth:
+          - "read:res"
+  /reservations/future:
+    get:
+      tags:
+      - "ReservationController"
+      summary: "Récupérer toutes les réservations à venir."
+      description: ""
+      operationId: "getFutureReservations"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+            description: "Requête traitée"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Reservation"
+        "403":
+            description: "Vous n'êtes pas autorisé à effectuer cette action"
+      security:
+        - hotel_auth:
+          - "read:res"
+  /reservations/suggestion:
+    get:
+      tags:
+      - "ReservationController"
+      summary: "Récupérer des suggestions de réservations."
+      description: "Nous avons choisi de ne donner que la date d'arrivée en paramètre, l'application se chargera de suggérer une durée de séjour à l'utilisateur en prenant en compte l'état d'occupation des hotels."
+      operationId: "getSuggestions"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "dateArrivee"
+        in: "query"
+        description: "Date d'arrivée"
+        required: true
+        type: "string"
+        format: "date-time"
+      responses:
+        "200":
+            description: "Requête traitée"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Reservation"
+        "403":
+          description: "Vous n'êtes pas autorisé à effectuer cette action"
+      security:
+        - hotel_auth:
+          - "read:res"
+  /remplissage:
+    get:
+      tags:
+      - "StateController"
+      summary: "Récupérer l'état d'occupation."
+      description: "Renvoie une liste d'hôtels, et pour chacun, une liste de jours avec le nombre d'occupations correspondant."
+      operationId: "getRemplissage"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "mois"
+        in: "query"
+        description: "Mois concerné"
+        required: true
+        type: "string"
+        format: "month"
+      responses:
+        "200":
+            description: "Requête traitée"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/OccupationMois"
+        "403":
+          description: "Vous n'êtes pas autorisé à effectuer cette action"  
+      security:
+        - hotel_auth:
+          - "read:res" 
+  /ca/prevision:
+    get:
+      tags:
+      - "CAController"
+      summary: "Récupérer toutes les réservations à venir."
+      description: ""
+      operationId: "getCaPrevision"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "month"
+        in: "query"
+        description: "Mois concerné"
+        required: true
+        type: "string"
+        format: "month"
+      responses:
+        "200":
+            description: "Requête traitée."
+            schema:
+              $ref: "#/definitions/CAMensuel"
+        "400":
+            description: "Vous ne pouvez pas demander une prévision pour un mois passé."
+        "403":
+            description: "Vous n'êtes pas autorisé à effectuer cette action."
+      security:
+        - hotel_auth:
+          - "read:ca"
+  /ca/annuel:
+    get:
+      tags:
+      - "CAController"
+      summary: "Récupérer toutes les réservations à venir."
+      description: "Retourne le chiffre d'affaires de l'année demandée"
+      operationId: "getCaAnnuel"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "year"
+        in: "query"
+        description: "Année concernée"
+        required: true
+        type: "string"
+        format: "year"
+      responses:
+        "200":
+            description: "Requête traitée."
+            schema:
+              $ref: "#/definitions/CAAnnuel"
+        "400":
+            description: "Vous ne pouvez pas demander le CA d'une année future."
+        "403":
+            description: "Vous n'êtes pas autorisé à effectuer cette action."
+      security:
+        - hotel_auth:
+          - "read:ca"      
+securityDefinitions:
+  hotel_auth:
+    type: "oauth2"
+    authorizationUrl: "http://api.parishotels.com/oauth/"
+    flow: "implicit"
+    scopes:
+      write:res: "Modifier les réservations"
+      read:res: "Lire les réservations"
+      read:ca: "Lire les données financières"
+definitions:
+  Hotel:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      adresse:
+        type: "string"
+        description: "Adresse de l'hôtel"
+      chambres:
+        type: "array"
+        items:
+          $ref: "#/definitions/Chambre"
+        description: "Chambres de l'hôtel"  
+      prixChambre:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "Hotel"
+  Chambre:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      numChambre:
+        type: "string"
+        description: "Numéro de la chambre"  
+    xml:
+      name: "Chambre"
+  Client:    
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nom:
+        type: "string"
+        description: "Nom du client"  
+    xml:
+      name: "Client"
+  Reservation:    
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      active:
+        type: "boolean"   
+      hotel:
+        $ref: "#/definitions/Hotel"
+      chambre:
+        type: "array"
+        items:
+          $ref: "#/definitions/Chambre"
+      client: 
+        $ref: "#/definitions/Client"
+      dateDebut:
+        type: "string"
+        format: "date-time"  
+      dateFin:
+        type: "string"
+        format: "date-time"
+      cout:
+        type: "number"
+        format: "double"
+      discount:
+        type: "number"
+        format: "double"  
+    xml:
+      name: "Client"    
+  OccupationMois:
+    type: "object"
+    properties:
+      hotelId:
+        type: "integer"
+        format: "int64"
+      mois:
+        type: "string"
+        format: "month"
+      nbChambresTotal:
+        type: "integer"
+        description: "Nombre de chambres au total dans cet hôtel"  
+      occupationsJour:
+        type: "array"
+        items:
+          $ref: "#/definitions/OccupationJour"
+    xml:
+      name: "OccupationMois"
+  OccupationJour:
+    type: "object"
+    properties:
+      date:
+        type: "string"
+        format: "date-time"
+        description: "Nombre de chambres occupées"
+      nbChambresOccupees:
+        type: "integer"
+        description: "Nombre de chambres occupées"
+    xml:
+      name: "OccupationJour"
+  CAMensuel:
+    type: "object"
+    properties:
+      month:
+        type: "string"
+        format: "month"
+        description: "Mois concerné"
+      ca:
+        type: "number"
+        format: "double"
+        description: "Chiffre d'affaires du mois"
+    xml:
+      name: "CAMensuel"
+  CAAnnuel:
+    type: "object"
+    properties:
+      year:
+        type: "string"
+        format: "year"
+        description: "Année concernée"
+      ca:
+        type: "number"
+        format: "double"
+        description: "Chiffre d'affaires de l'année"
+    xml:
+      name: "CAAnnuel"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

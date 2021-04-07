@@ -2,6 +2,10 @@
     margin-bottom: 15px;
 }
 
+p {
+    text-align: justify;
+}
+
 tr {
     text-align: center;
 }
@@ -11,12 +15,12 @@ tr {
 }
 
 .img-nelly {
-    width: 100px;
+    width: 90px;
     position: absolute;
 }
 .img-nelly-top {
     right: -30px;
-    top: -29px;
+    top: -32px;
 }
 
 .img-nelly-bot {

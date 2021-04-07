@@ -1,0 +1,11 @@
+.card {
+    margin-bottom: 15px;
+}
+
+tr {
+    text-align: center;
+}
+
+#search {
+    float: right;
+}

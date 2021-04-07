@@ -9,3 +9,18 @@ tr {
 #search {
     float: right;
 }
+
+.img-nelly {
+    width: 100px;
+    position: absolute;
+}
+.img-nelly-top {
+    right: -30px;
+    top: -29px;
+}
+
+.img-nelly-bot {
+    left: -30px;
+    bottom: -49px;
+}
+

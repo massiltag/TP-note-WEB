@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TP Noté WEB</title>
+    <title>Méteo</title>
     
     <!-- jQuery -->
     <script src="./lib/jquery.min.js"></script>
@@ -14,73 +14,98 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Our files -->
-    <script src="./script.js"></script>
     <link rel="stylesheet" href="./styles.css">
+    <script src="./assets/languages.js"></script>
+    <script src="./assets/countries.js"></script>
+    <script src="./script.js"></script>
 </head>
 
-<body style="background-color: rgb(238, 235, 235); padding: 20px;" onload="setEvents()" class="container">
+<body style="background-color: rgb(238, 235, 235); padding: 20px 20px 0 20px;" onload="onLoad()" class="container">
+
+    <div class="card">
+        <img class="card-img-top header-img" src="./assets/img2.jpg" alt="Weather Image" style="width: 52vw; display: block; margin: auto;">
+        <div class="card-body">
+          <h3 class="card-title">OpenWeatherMap API</h3>
+          <p class="card-text">Pour ce TP, nous avons exploité l'API OpenWeatherMap qui fournit des données météo partout dans le monde.</p>
+          <a href="https://openweathermap.org/current" target="_blank" class="btn btn-primary" style="float: right;">Lire la documentation</a>
+        </div>
+    </div>
+      
     <div class="card" style="background-color: white;">
         <div class="card-body">
             <h3 style="font-weight: 500;">
-                Requête API <br>
+                Testez l'API <br>
                 <small class="text-muted" style="font-size: large;">Remplissez les champs et faites une requête API</small>
             </h3>
             <form>
                 <div class="form-group">
-                    <label for="champ1">Champ 1</label>
+                    <label for="champ1">Ville</label>
                     <input type="text" class="form-control" id="champ1" placeholder="Saisissez la ville">
                 </div>
                 <div class="form-group">
-                    <label for="champ2">Champ 2</label>
-                    <input type="text" class="form-control" id="champ2" placeholder="Saisissez le code pays">
+                    <label for="champ2">Code pays</label>
+                    <select class="form-control" id="champ2" placeholder="Saisissez le code pays">
+                        <script>
+                            html = "";
+                            html += "<option value=\"\"" + ">" + "Tous" + "</option>"
+                            for(var country of countries) {
+                                html += "<option value=" + country.column[2]  + ">" + country.column[4] + "</option>"
+                            }
+                            document.getElementById("champ2").innerHTML = html;
+                        </script>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="champ3">Champ 3</label>
-                    <input type="text" class="form-control" id="champ3" placeholder="Saisissez le langue">
+                    <label for="champ3">Langue</label>
+                    <select class="form-control" id="champ3" placeholder="Choisissez la langue">
+                        <script>
+                            html = "";
+                            html += "<option value=" + "fr"  + ">" + "Français" + "</option>"
+                            for(var key in languages) {
+                                html += "<option value=" + key  + ">" + languages[key]["name"] + "</option>"
+                            }
+                            document.getElementById("champ3").innerHTML = html;
+                        </script>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="champ3">Champ 4</label>
-                    <input type="text" class="form-control" id="champ4" placeholder="Saisissez l'unité">
+                    <label for="champ3">Unité</label>
+                    <select class="form-control" id="champ4" placeholder="Choisissez l'unité">
+                        <option value="metric">Celcius (°C)</option>
+                        <option value="imperial">Fahrenheit (°F)</option>
+                        <option value="standard">Kelvin (°K)</option>
+                    </select>   
                 </div>
             </form>
             <button class="btn btn-primary" id="search">Requête</button>
+            <img class="img-nelly img-nelly-top" src="./assets/nelly/soleil_mignon.png" alt="soleil">
         </div>
     </div>
 
     <div class="card" style="background-color: white;">
         <div class="card-body">
             <h3 style="font-weight: 500;">
-                Résultats <br>
-                <small class="text-muted" style="font-size: large;">Voici les résultats de votre recherche</small>
+                Températures <br>
+                <small class="text-muted" style="font-size: large;">Voici les résultats de vos requêtes</small>
             </h3>
-            <table id="table" class="table">
-                <tr>
-                    <th class="table-primary">ID</th>
-                    <th class="table-primary">Attribut 1</th>
-                    <th class="table-primary">Attribut 2</th>
-                    <th class="table-primary">Attribut 3</th>
-                </tr>
-                <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </table>
+
+            <div class="table-container" style="overflow: scroll;">
+                <table id="table" class="table">
+                    <tr>
+                        <th class="table-primary">Ville</th>
+                        <th class="table-primary">Description</th>
+                        <th class="table-primary">Moyenne</th>
+                        <th class="table-primary">Ressentie</th>
+                        <th class="table-primary">Minimale</th>
+                        <th class="table-primary">Maximale</th>
+                    </tr>
+                </table>
+            </div>
         </div>
+        <img class="img-nelly img-nelly-bot" src="./assets/nelly/nuage_mignon.png" alt="soleil">
     </div>
+
+    <img src="assets/bg.png" style="width: 62vw; display: block; margin: auto;">
 
 </body>
 

@@ -43,7 +43,7 @@ function req2() {
    
     let apiKey="ecaa16f9b4b360ea8b57867cd78a6816"
 
-    let URL = "http://api.openweathermap.org/data/2.5/weather?q="+ville+","+codePays+"&lang="+langue+"&units="+units+'&appid='+apiKey;
+    let URL = "https://api.openweathermap.org/data/2.5/weather?q="+ville+","+codePays+"&lang="+langue+"&units="+units+'&appid='+apiKey;
 
     makeAjaxCall(URL, "GET").then(function (respJson) {
 

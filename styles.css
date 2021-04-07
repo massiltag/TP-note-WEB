@@ -1,25 +1,30 @@
 .card {
     margin-bottom: 15px;
 }
-.card-title{
+.card-title {
     margin-bottom: 15px;
-    color: rgb(255, 208, 1); 
 }
 
 .table-container th{
-    background-color: rgb(62, 70, 104);color:white;
+    background-color: rgb(62, 70, 104);
+    color:white;
 }
 
 .table-container{
     overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
-.card-img-top{
+.table-container::-webkit-scrollbar {
+  display: none;
+}
+
+.card-img-top {
     width: 50%; display: block; margin: auto;
 }
 
-#card2{
-    background-color: white;
+.gradient-card {
     background-color: rgba(255, 255, 255, 0.534);
 }
 
@@ -73,8 +78,7 @@ h3{
     position: absolute;
 }
 .img-nelly-top {
-    
-    left: -69px;
+    left: -65px;
     top: -29px;
 }
 
@@ -86,24 +90,25 @@ h3{
 .img-nelly-bot {
     left: -30px;
     bottom: -49px;
+    width: 230px;
 }
 
 .img-nelly-right-bot {
-    width: 300px;
-    right: -120px;
+    right: -20px;
     bottom: -60px;
-    z-index:1
+    z-index: 1;
+    width: 98px
 }
 
 .img-nelly-top-top {
     top: -20px;
-    right: -70px;
+    right: -35px;
   
 }
 
 .img-nelly-top-left {
     top: -20px;
-    left: -60px;
+    left: -49px;
 
 }
 

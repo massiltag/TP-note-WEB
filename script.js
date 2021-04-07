@@ -33,7 +33,6 @@ function req() {
     alert('requête');
 }
 
-//zip code api
 function req2() {
     //coordonnees de Paris 
     let ville = document.getElementById("champ1").value;

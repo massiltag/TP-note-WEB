@@ -14,17 +14,45 @@ tr {
     float: right;
 }
 
+
 .img-nelly {
-    width: 90px;
+    width: 100px;
     position: absolute;
 }
 .img-nelly-top {
+    
+    left: -69px;
+    top: -29px;
+}
+
+.img-nelly-left {
     right: -30px;
-    top: -32px;
+    top: -29px;
 }
 
 .img-nelly-bot {
     left: -30px;
     bottom: -49px;
 }
+
+.img-nelly-right-bot {
+    width: 300px;
+    right: -70px;
+    bottom: -250px;
+    z-index:1
+}
+
+.img-nelly-top-top {
+    top: -20px;
+    right: -70px;
+  
+}
+
+.img-nelly-top-left {
+    top: -20px;
+    left: -60px;
+
+}
+
+
 

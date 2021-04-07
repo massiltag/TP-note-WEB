@@ -6,6 +6,32 @@
     color: rgb(255, 208, 1); 
 }
 
+.table-container th{
+    background-color: rgb(62, 70, 104);color:white;
+}
+
+.table-container{
+    overflow: scroll;
+}
+
+.card-img-top{
+    width: 50%; display: block; margin: auto;
+}
+
+#card2{
+    background-color: white;
+    background-color: rgba(255, 255, 255, 0.534);
+}
+
+#search{
+    background-color: rgb(62, 70, 104);
+}
+
+#doc{
+    background-color: rgb(62, 70, 104);
+    float:right;
+}
+
 
 p {
     text-align: justify;
@@ -13,6 +39,14 @@ p {
 
 tr {
     text-align: center;
+}
+
+h3{
+    font-weight: 500;
+}
+
+.text-muted{
+    font-size: large;
 }
 
 .table-primary th {
@@ -29,7 +63,11 @@ tr {
     padding: 20px 20px 0 20px;
     
 }
-
+.terre{
+    width: 62%; 
+    display: block; 
+    margin: auto;
+}
 .img-nelly {
     width: 100px;
     position: absolute;

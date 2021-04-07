@@ -23,21 +23,21 @@
 <body onload="onLoad()" class="container">
 
     <div class="card">
-        <img class="card-img-top header-img" src="./assets/img2.jpg" alt="Weather Image" style="width: 50%; display: block; margin: auto;">
+        <img class="card-img-top" src="./assets/img2.jpg" alt="Weather Image">
         <div class="card-body">
           <h3 class="card-title">OpenWeatherMap API</h3>
           <p class="card-text">Pour ce TP, nous avons exploité l'API OpenWeatherMap qui fournit des données météo partout dans le monde.</p>
-          <a href="https://openweathermap.org/current" target="_blank" class="btn btn-primary" style="float: right;background-color: rgb(62, 70, 104)">Lire la documentation</a>
+          <a href="https://openweathermap.org/current" id="doc" target="_blank" class="btn btn-primary">Lire la documentation</a>
         </div>
           <img class="img-nelly img-nelly-top-top" src="./assets/nelly/pluie_mignon.png" alt="pluie">
         <img class="img-nelly img-nelly-top-left" src="./assets/nelly/lune_mignon.png" alt="lune">
     </div>
       
-    <div class="card" style="background-color: white;background-color: rgba(255, 255, 255, 0.534); ">
+    <div class="card" id="card2">
         <div class="card-body">
-            <h3 style="font-weight: 500;">
+            <h3>
                 Testez l'API <br>
-                <small class="text-muted" style="font-size: large;">Remplissez les champs et effectuez une requête API.</small>
+                <small class="text-muted">Remplissez les champs et effectuez une requête API.</small>
             </h3>
             <form>
                 <div class="form-group">
@@ -79,28 +79,28 @@
                     </select>   
                 </div>
             </form>
-            <button class="btn btn-primary" style ="background-color: rgb(62, 70, 104)" id="search">Requête</button>
+            <button class="btn btn-primary" id="search">Requête</button>
             <img class="img-nelly img-nelly-top" src="./assets/nelly/soleil_mignon.png" alt="soleil">
             <img class="img-nelly img-nelly-left" src="./assets/nelly/orage_mignon.png" alt="orage">
         </div>
     </div>
 
-    <div class="card" style="background-color: white;background-color: rgba(255, 255, 255, 0.534); ">
+    <div class="card" id="card2">
         <div class="card-body">
-            <h3 style="font-weight: 500;">
+            <h3>
                 Températures <br>
-                <small class="text-muted" style="font-size: large;">Voici les résultats de vos requêtes.</small>
+                <small class="text-muted">Voici les résultats de vos requêtes.</small>
             </h3>
 
-            <div class="table-container" style="overflow: scroll;">
+            <div class="table-container">
                 <table id="table" class="table">
                     <tr>
-                        <th class="table-primary" style=" background-color: rgb(62, 70, 104);color:white;">Ville</th>
-                        <th class="table-primary" style=" background-color: rgb(62, 70, 104);color:white;">Description</th>
-                        <th class="table-primary" style=" background-color: rgb(62, 70, 104);color:white;">Moyenne</th>
-                        <th class="table-primary" style=" background-color: rgb(62, 70, 104);color:white;">Ressentie</th>
-                        <th class="table-primary" style=" background-color: rgb(62, 70, 104);color:white;">Minimale</th>
-                        <th class="table-primary" style=" background-color: rgb(62, 70, 104);color:white;"  >Maximale</th>
+                        <th class="table-primary">Ville</th>
+                        <th class="table-primary" >Description</th>
+                        <th class="table-primary" >Moyenne</th>
+                        <th class="table-primary" >Ressentie</th>
+                        <th class="table-primary" >Minimale</th>
+                        <th class="table-primary" >Maximale</th>
                     </tr>
                 </table>
             </div>
@@ -109,7 +109,7 @@
         <img class="img-nelly img-nelly-right-bot" src="./assets/nelly/tempete_mignon.png" alt="tempete">
     </div>
 
-    <img src="assets/bg.png" style="width: 62%; display: block; margin: auto;">
+    <img class="terre" src="assets/bg.png">
     
 
 </body>
